@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My first react</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@17/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"
+      integrity="sha512-kp7YHLxuJDJcOzStgd6vtpxr4ZU9kjn77e6dBsivSz+pUuAuMlE2UTdKB7jjsWT84qbS8kdCWHPETnP/ctrFsA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+    //   const context = React.createElement(
+    //     'h1',
+    //     {
+    //       id: 'container',
+    //       className: 'row',
+    //     },
+    //     'This looks so complex..... :<'
+    //   )
+
+        const title = 'My First React'
+        const value = 50
+        function saleOn(){
+            return true
+        }
+
+        const context = <div className="row">
+                <div className="col s2">
+                    <div className="card hoverable small">
+                        <div className="card-image">
+                            <img src="http://lorempixel.com/400/200/city" />
+                        </div>
+
+                        <div className="card-content">
+                            <p>{title}</p>
+                            <p>Hello~</p>
+                        </div>
+
+                        <div className="card-action">
+                            <a href="#">$  {value}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+      ReactDOM.render(context, document.getElementById('root'))
+    </script>
+  </body>
+</html>

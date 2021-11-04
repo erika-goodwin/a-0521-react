@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useRef } from 'react'
 
 function App() {
+  const [nameInput, setNameInput] = useState('')
+  const inputRef = useRef()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // console.log(nameInput)
+    console.log(inputRef.current.value)
+  }
+
+  const handleInputChange = (e) => {
+    setNameInput(e.target.value)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>React Practice Forms</h1>
+      <h2>Event, Forms and Ref</h2>
+
+      <br />
+
+      <form onSubmit={handleSubmit}>
+        <div className="group">
+          <input 
+            type="text" 
+            onBlur={() => console.log('Blurred')} 
+            onFocus={() => console.log('Focused')}
+            // onChange={() => console.log('Changed')}
+            // onChange={handleInputChange}
+            // onChange={(e) => setNameInput(e.target.value)}
+            ref={inputRef}
+          />
+        </div>
+      </form>
     </div>
   );
 }

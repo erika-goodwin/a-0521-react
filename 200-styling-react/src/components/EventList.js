@@ -1,4 +1,6 @@
 import React, {Fragment} from 'react'
+
+//Import as Object
 import styles from './EventList.module.css'
 
 export default function EventList({ events, handleClick }){

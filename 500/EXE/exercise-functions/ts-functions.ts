@@ -14,15 +14,15 @@ const ExerciseThree = () => {
   // • Add explicit parameter types and return type
   // • Fix any errors resulting from invalid types
 
-  function add(x:number, y:number) {
+  function add(x:number, y:number):number {
     return x + y
   }
 
-  function sumArray(numbers) {
+  function sumArray(numbers: Array<number>): number {
     return numbers.reduce(add, 0)
   }
 
-  const someSum:number = sumArray(['3', '6', '9'])
+  const someSum:number = sumArray([3, 6, 9])
 
   console.log('[Exercise 3.1]', `3 + 6 + 9 === ${someSum}`)
 
@@ -51,12 +51,12 @@ const ExerciseThree = () => {
   // Instructions:
   // • Add type annotations wherever possible
 
-  function computeScore(word:string) {
+  function computeScore(word:string): number {
     const letters = word.toUpperCase().split('')
     return letters.reduce((accum: number, curr:string) => (accum += getPointsFor(curr)), 0)
   }
 
-  function getPointsFor(letter) {
+  function getPointsFor(letter:string): number {
     const lettersAndPoints: [string,number][] = [
       ['AEOIULNRST', 1],
       ['DG', 2],
@@ -67,7 +67,7 @@ const ExerciseThree = () => {
       ['QZ', 10],
     ]
 
-    return lettersAndPoints.reduce((computedScore, pointsTuple) => {
+    return lettersAndPoints.reduce((computedScore: number, pointsTuple: [string, number]) => {
       const [letters, score]:[string, number] = pointsTuple
       if (letters.split('').find((ll) => ll === letter)) {
         return (computedScore += score)
@@ -83,11 +83,11 @@ const ExerciseThree = () => {
   // • Add explicit parameter types and return types
   // • Add a default greeting: "hello"
 
-  function greet(greeting:string) {
+  function greet(greeting:string = 'hello') : string {
     return greeting.toUpperCase()
   }
 
-  const defaultGreeting = greet('hello')
+  const defaultGreeting = greet()
   const portugueseGreeting = greet('Oi como vai!')
 
   console.log('[Exercise 3.4]', defaultGreeting, portugueseGreeting)
@@ -97,13 +97,13 @@ const ExerciseThree = () => {
   // • Add parameter type annotation
   // • Even though this function doesn't return, add an explicit return type
 
-  function layEggs(quantity, color):void {
+  function layEggs(quantity: number, color: string):void {
     console.log(
       `[Exercise 3.5] You just laid ${quantity} ${color} eggs. Good job!`
     )
   }
 
-  layEggs()
+  layEggs(2, 'red')
 
   // ======== Exercise 3.6 ========
   // Here we've initialized two variables with function types.
@@ -114,11 +114,11 @@ const ExerciseThree = () => {
   let multiply: (val1: number, val2: number) => number
   let capitalize: (val: string) => string
 
-  multiply = function (value: string): string {
+  capitalize = function (value: string): string {
     return `${value.charAt(0).toUpperCase()}${value.slice(1)}`
   }
 
-  capitalize = function (x: number, y: number): number {
+  multiply = function (x: number, y: number): number {
     return x * y
   }
 
@@ -144,19 +144,19 @@ const ExerciseThree = () => {
   const numberCollection: number[] = []
   const stringCollection: string[] = []
 
-  function pushToCollection(item, collection) {
+  function pushToCollection<T>(item: T, collection: T[]) {
     collection.push(item)
     return collection
   }
 
   // Add some stuff to the collections
-  pushToCollection(false, stringCollection)
+  pushToCollection('false', stringCollection)
   pushToCollection('hi', stringCollection)
-  pushToCollection([], stringCollection)
+  pushToCollection('[]', stringCollection)
 
-  pushToCollection('1', numberCollection)
-  pushToCollection('2', numberCollection)
-  pushToCollection('3', numberCollection)
+  pushToCollection(1, numberCollection)
+  pushToCollection(2, numberCollection)
+  pushToCollection(3, numberCollection)
 
   const incrementedByTwo = numberCollection.map((num) => num + 2)
 

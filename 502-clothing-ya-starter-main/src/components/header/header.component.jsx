@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import './header.styles.scss';
+// import './header.styles.scss';
+import {HeaderContainer, LogoContainer, OptionContainer, OpitionContainer, OptionLink } from './header.style'
 import logo from 'assets/images/ClothingYa.png';
 
 import CartIcon from 'components/cart-icon/cart-icon.component';
@@ -17,22 +18,22 @@ const Header = () => {
   }
 
   return(
-  <div className='header'>
-    <Link className='logo-container' to='/'>
+  <HeaderContainer>
+    <LogoContainer to='/'>
       <img src={logo} alt="Logo" />
-    </Link>
-    <div className='options'>
-      <Link className='option' to='/shop'>
+    </LogoContainer>
+    <OptionContainer>
+      <OptionLink to='/shop'>
         SHOP
-      </Link>
-      <Link className='option' to='/signin'>
+      </OptionLink>
+      <OptionLink to='/signin'>
         SIGN IN
-      </Link>
+      </OptionLink>
 
       <CartIcon toggleCartHidden={toggleCartHidden} />
-    </div>
+    </OptionContainer>
     {hidden ? null : <CartDropdown />}
-  </div>
+  </HeaderContainer>
 )};
 
 export default Header;

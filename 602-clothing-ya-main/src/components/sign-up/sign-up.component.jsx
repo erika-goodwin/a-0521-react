@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 
 import { SignUpContainer, SignUpTitle } from './sign-up.styles'
 
 import CustomButton from 'components/custom-button/custom-button.component'
 import FormInput from 'components/form-input/form-input.component'
-import { createUserProfileDocument } from 'firebase/firebase.util'
+import { createUserProfileDocument } from 'firebase/firebase.helper'
 
 const SignUp = () => {
   const [user, setUser] = useState({

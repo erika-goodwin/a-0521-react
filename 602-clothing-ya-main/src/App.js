@@ -1,6 +1,5 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { useAuthStatus } from 'hooks/useAuthStatus'
 
 import './App.scss'
 
@@ -11,11 +10,21 @@ import SignInAndSignUp from 'pages/sign-in-and-sign-up/sign-in-and-sign-up.compo
 import PrivateRoute from 'components/routes/PrivateRoute.route'
 import CheckoutPage from 'pages/checkout/checkout-page.component'
 
+import { addShop, addDirectory } from 'firebase/firebase.seed'
+
 function App() {
-  const { loggedIn } = useAuthStatus()
+  /**
+   * Uncomment the code below only when you want to seed your firestore
+   * with the provided local dummy data for shop items and directory items
+   *
+   * Only run this code once
+   */
+  // addDirectory()
+  // addShop()
+
   return (
     <div className='App'>
-      <Header loggedIn={loggedIn} />
+      <Header />
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route

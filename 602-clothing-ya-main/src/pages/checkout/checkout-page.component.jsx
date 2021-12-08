@@ -1,5 +1,6 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+
+import { useSelector, useDispatch } from 'react-redux'
 
 import {
   CheckoutPageContainer,
@@ -14,7 +15,7 @@ import StripeCheckoutButton from 'components/stripe-button/stripe-button.compone
 
 const CheckoutPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems)
-    const total = 0
+    const totalPrice = cartItems.reduce((acc, cartItem)=>(acc + cartItem.quantity), 0)
     return(
     <CheckoutPageContainer>
         <CheckoutHeaderContainer>
@@ -31,14 +32,14 @@ const CheckoutPage = () => {
             ))
         }
 
-        <TotalContainer>TOTAL: ${total}</TotalContainer>
+        <TotalContainer>TOTAL: ${totalPrice}</TotalContainer>
         <WarningContainer>
             * Use the following test credit cart for payment *
             <br />
             4242 4242 4242 4242 - Exp: future date - CVC: 123
         </WarningContainer>
 
-        <StripeCheckoutButton price={total} />
+        <StripeCheckoutButton price={totalPrice}/>
     </CheckoutPageContainer>
 )}
 

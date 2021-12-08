@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => {
 
     return { 
         collections: state.shop.collections.filter(item => item.title.toLowerCase() === collectionId.toLowerCase())[0] ,
-        isLoading: false
+        isLoading: state.shop.isFetching
     }
 }
 

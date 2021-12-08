@@ -25,6 +25,6 @@ const CartDropdown = () => {
     </CartItemsContainer>
     <CartDropdownButton onClick={() => { navigate('/checkout') }} >GO TO CHECKOUT</CartDropdownButton>
   </CartDropdownContainer>
-)};
+)}
 
 export default CartDropdown;

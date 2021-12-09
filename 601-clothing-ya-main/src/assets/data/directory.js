@@ -1,4 +1,4 @@
-export const directory = {
+const DIRECTORY = {
   sections: [
     {
       title: 'hats',
@@ -42,3 +42,5 @@ export const directory = {
     },
   ],
 }
+
+export default DIRECTORY

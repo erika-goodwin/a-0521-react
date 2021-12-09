@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect, createRef} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getAuth, signOut } from 'firebase/auth'
 
@@ -21,6 +21,7 @@ const Header = () => {
   const { loggedIn } = useAuthStatus()
   const navigate = useNavigate()
   const auth = getAuth()
+  const ref=
 
   const toggleCartHidden = () => {
     setHidden((prevState) => !prevState)
@@ -49,7 +50,7 @@ const Header = () => {
         )}
         <CartIcon toggleCartHidden={toggleCartHidden} />
       </OptionContainer>
-      {hidden ? null : <CartDropdown />}
+      {hidden ? null : <CartDropdown ref={ref}/>}
     </HeaderContainer>
   )
 }

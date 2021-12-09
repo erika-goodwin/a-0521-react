@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 // import './homepage.styles.scss';
-import {HomepageContainer} from './homepage.styles'
+import { HomepageContainer } from './homepage.styles'
 
-import Directory from 'components/directory/directory.component';
+import Directory from 'components/directory/directory.component'
+import { fetchDirectoryStartAsync } from 'redux/directory/directory.actions'
 
+const HomePage = () => {
+  const dispatch = useDispatch()
 
-const HomePage = () => (
-  <HomepageContainer>
-    <Directory />
-  </HomepageContainer>
-);
+  useEffect(() => {
+    dispatch(fetchDirectoryStartAsync())
+  }, [dispatch])
 
-export default HomePage;
+  return (
+    <HomepageContainer>
+      <Directory />
+    </HomepageContainer>
+  )
+}
+
+export default HomePage

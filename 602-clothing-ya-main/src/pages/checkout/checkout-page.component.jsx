@@ -1,6 +1,5 @@
 import React from 'react'
-
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import {
   CheckoutPageContainer,
@@ -15,7 +14,7 @@ import StripeCheckoutButton from 'components/stripe-button/stripe-button.compone
 
 const CheckoutPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems)
-    const totalPrice = cartItems.reduce((acc, cartItem)=>(acc + cartItem.quantity), 0)
+    const totalPrice = cartItems.reduce((acc, cartItem) => ( acc + cartItem.quantity * cartItem.price), 0)
     return(
     <CheckoutPageContainer>
         <CheckoutHeaderContainer>
@@ -39,7 +38,7 @@ const CheckoutPage = () => {
             4242 4242 4242 4242 - Exp: future date - CVC: 123
         </WarningContainer>
 
-        <StripeCheckoutButton price={totalPrice}/>
+        <StripeCheckoutButton price={totalPrice} />
     </CheckoutPageContainer>
 )}
 

@@ -24,6 +24,8 @@ export const fetchCollectionStartAsync = () => {
 
             const collectionsRef = collection(db, 'collections')
 
+            dispatch(fetchCollectionStart())
+
             const querySnap = await getDocs(collectionsRef)
 
             const collectionsMap = []
@@ -47,6 +49,6 @@ export const fetchCollectionSuccess = (collectionsMap) => ({
     payload: collectionsMap
 })
 export const fetchCollectionFailure = (errorMessage) => ({
-    type: FETCH_COLLECTIONS_START,
+    type: FETCH_COLLECTIONS_FAILURE,
     payload: errorMessage
 })

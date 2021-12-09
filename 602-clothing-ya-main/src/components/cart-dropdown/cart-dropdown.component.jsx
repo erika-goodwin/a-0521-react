@@ -17,7 +17,7 @@ const CartDropdown = () => {
   const cartItems = useSelector(state => state.cart.cartItems)
 
   return(
-  <CartDropdownContainer>
+  <CartDropdownContainer ref={ref}>
     <CartItemsContainer>
       {cartItems.map(cartItem => (
         <CartItem key={cartItem.id} item={cartItem} />

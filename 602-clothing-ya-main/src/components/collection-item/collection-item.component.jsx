@@ -10,7 +10,7 @@ import {
     PriceContainer
 } from './collection-item.styles'
 
-import { addItem } from 'redux/cart/cart.actions'
+import { addItemAction } from 'redux/cart/cart.actions'
 
 const CollectionItem = ({ item }) => {
     const { name, price, imageUrl } = item
@@ -24,7 +24,7 @@ const CollectionItem = ({ item }) => {
                 <NameContainer>{name}</NameContainer>
                 <PriceContainer>{price}</PriceContainer>
             </CollectionFooterContainer>
-            <AddButton onClick={() => dispatch(addItem(item))}>Add to Cart</AddButton>
+            <AddButton onClick={() => dispatch(addItemAction(item))}>Add to Cart</AddButton>
         </CollectionItemContainer>
     )
 }

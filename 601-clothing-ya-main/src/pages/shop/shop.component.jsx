@@ -11,7 +11,7 @@ const ShopPage = () => {
 
     useEffect(() => {
         dispatch(fetchCollectionStartAsync())
-    }, [])
+    }, [dispatch])
 
     return(
         <>

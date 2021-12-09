@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 
 import {
   CheckoutItemContainer,
@@ -8,7 +9,7 @@ import {
   RemoveButtonContainer,
 } from './checkout-item.styles'
 
-import {addItemAction, removeItemAction, clearItemFromCartAction} from 'redux/cart/cart.actions'
+import {addItemAction,removeItemAction,clearItemFromCartAction} from 'redux/cart/cart.actions'
 
 const CheckoutItem = ({ cartItem }) => {
 
@@ -18,7 +19,7 @@ const CheckoutItem = ({ cartItem }) => {
 
     const addItem = (cartItem) => dispatch(addItemAction(cartItem))
     const removeItem = (cartItem) => dispatch(removeItemAction(cartItem))
-    const clearCart= (cartItem) => dispatch(clearItemFromCartAction(cartItem))
+    const clearCart = (cartItem) => dispatch(clearItemFromCartAction(cartItem))
 
     return(
         <CheckoutItemContainer>
@@ -31,16 +32,16 @@ const CheckoutItem = ({ cartItem }) => {
             </TextContainer>
 
             <QuantityContainer>
-                <div onClick={()=> removeItem()}>&#10094;</div>
+                <div onClick={() => removeItem(cartItem)}>&#10094;</div>
                 <span>{quantity}</span>
-                <div  onClick={()=> addItem()}>&#10095;</div>
+                <div onClick={() => addItem(cartItem)}>&#10095;</div>
             </QuantityContainer>
 
             <TextContainer>
                 {price}
             </TextContainer>
 
-            <RemoveButtonContainer  onClick={()=> clearCart(cartItem)}>
+            <RemoveButtonContainer onClick={() => clearCart(cartItem)}>
                 &#10005;
             </RemoveButtonContainer>
         </CheckoutItemContainer>

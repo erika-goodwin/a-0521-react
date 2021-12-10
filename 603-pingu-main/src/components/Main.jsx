@@ -4,11 +4,11 @@ import styled from 'styled-components'
 import SideBar from './SideBar'
 import Chat from './Chat'
 
-const Main = ({ user }) => {
+const Main = () => {
     return (
         <MainContainer>
-            <SideBar user={user} />
-            <Chat user={user} />
+            <SideBar />
+            <Chat />
         </MainContainer>
     )
 }

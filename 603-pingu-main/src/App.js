@@ -1,38 +1,36 @@
 import React, {useState, useEffect} from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
+import { useSelector, useDispatch } from 'react-redux'
 
 import './App.css';
 
 import Login from './components/Login';
 import Main from './components/Main'
 import { auth } from './firebase/firebase'
-import { selectUser} from './redux/features/userSlice'
+import { selectUser, login, logout } from './redux/features/userSlice'
 
 function App() {
-  const [user, setUser] = useState(null)
+  const user = useSelector(selectUser)
   const dispatch = useDispatch()
 
   useEffect(() => {
     onAuthStateChanged(auth, (authUser) => {
       if(authUser){
-        // console.log(authUser)
         dispatch(login({
           uid: authUser.uid,
-          photo:authUser.photoURL,
-          email:authUser.email,
-          displayName: authUser.displayName
+          photo: authUser.photoURL,
+          email: authUser.email,
+          displayName: authUser.displayName,
         }))
-
-        
       }else{
         dispatch(logout())
       }
     })
-  }, [])
+  }, [dispatch])
   return (
     <div className="App">
       {
-        user ? <Main  /> : <Login />
+        user ? <Main /> : <Login />
       }
       
     </div>

@@ -1,97 +1,113 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import styled from 'styled-components'
-import { IconButton } from '@material-ui/core'
-import { MicNone } from '@material-ui/icons'
-import { serverTimestamp,collection, addDoc, query, orderBy, getDocs } from 'firebase/firestore'
+import React, { useState, useEffect, useCallback } from "react";
+import styled from "styled-components";
+import { IconButton } from "@material-ui/core";
+import { MicNone } from "@material-ui/icons";
+import {
+  serverTimestamp,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  getDocs,
+} from "firebase/firestore";
+import { useSelector } from "react-redux";
 
-import { db } from '../firebase/firebase'
-import Message from './Message'
-import {selectUser} from '../redux/features/userSlice'
-import { selectChatId, selectChatName } from '../redux/features/chatSlice'
+import { db } from "../firebase/firebase";
+import Message from "./Message";
+import { selectUser } from "../redux/features/userSlice";
+import { selectChatId, selectChatName } from "../redux/features/chatSlice";
 
-const Chat = ({ user }) => {
-    const [messages, setMessages] = useState(null)
-    const [input, setInput] = useState('')
+const Chat = () => {
+  const [messages, setMessages] = useState(null);
+  const [input, setInput] = useState("");
 
-    const user= useSelector(selectUser)
-    const chatName = useSelector(selectChatName)
-    const chatId = userSelector(selectChatId)
+  const user = useSelector(selectUser);
+  const chatName = useSelector(selectChatName);
+  const chatId = useSelector(selectChatId);
 
-    useEffect(() => {
-        fetchMessages()
-    }, [])
-    useEffect(() => {
-        console.log('messages: ', messages);
-    }, [messages])
+  const fetchMessages = useCallback(async () => {
+    const msgRef = collection(db, "chats", "cA2GP3SDWnorQLKTLx8w", "messages");
+    const q = query(msgRef, orderBy("timestamp", "asc"));
+    await getDocs(q).then((snapshot) => {
+      setMessages(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
+      );
+    });
+  }, [chatId]);
 
-    const fetchMessages = async () => {
-        const msgRef = collection(db, 'chats', 'cA2GP3SDWnorQLKTLx8w', 'messages')
-        const q = query(msgRef, orderBy('timestamp', 'asc'))
-        await getDocs(q).then((snapshot) => {
-            setMessages(snapshot.docs.map((doc) => ({ 
-                id: doc.id, 
-                data: doc.data() 
-            })))
-        })
+  useEffect(() => {
+    if (chatId) {
+      fetchMessages();
     }
+  }, [chatId, fetchMessages]);
 
-    const sendMessage = async (e) => {
-        e.preventDefault()
-        
-        const data = {
-            uid: user.uid,
-            photo: user.photoURL || 'https://source.unsplash.com/200x200/?nature',
-            email: user.email,
-            displayName: user.displayName,
-            message: input,
-            timestamp: serverTimestamp()
-        }
-        // chats/chatid/message
-        const newMessageRef = collection(db, 'chats', 'XQM7BHamYQgVAdbEWF7U', 'messages')
-        await addDoc(newMessageRef, data).then(() => {
-            fetchMessages()
-            setInput('')
-        })
-    }
+  useEffect(() => {
+    console.log(messages);
+  }, [messages]);
 
-    return (
-        <ChatContainer>
-            <ChatHeaderContainer>
-                <ChatHeader>
-                    Room: <ChatName></ChatName>
-                </ChatHeader>
-            </ChatHeaderContainer>
+  const sendMessage = async (e) => {
+    e.preventDefault();
 
-            <ChatMessagesContainer>
-                { messages && messages.map(({ id, data}) => (
-                    <Message 
-                        key={id} 
-                        contents={data} 
-                        user={user}
-                    />
-                ))}
-            </ChatMessagesContainer>
+    const data = {
+      uid: user.uid,
+      photo: user.photoURL || "",
+      email: user.email,
+      displayName: user.displayName,
+      message: input,
+      timestamp: serverTimestamp(),
+    };
 
-            <ChatInputContainer>
-                <ChatForm>
-                    <ChatInput
-                        value={input}
-                        placeholder='Type a message'
-                        type='text'
-                        onChange={(e) => setInput(e.target.value)}
-                    />
-                    <ChatSubmitButton onClick={sendMessage}>Send Message</ChatSubmitButton>
-                </ChatForm>
+    // chats/chatid/message
+    const newMessageRef = collection(
+      db,
+      "chats",
+      "XQM7BHamYQgVAdbEWF7U",
+      "messages"
+    );
+    await addDoc(newMessageRef, data).then(() => {
+      fetchMessages();
+      setInput("");
+    });
+  };
 
-                <IconButton>
-                    <MicNone />
-                </IconButton>
-            </ChatInputContainer>
-        </ChatContainer>
-    )
-}
+  return (
+    <ChatContainer>
+      <ChatHeaderContainer>
+        <ChatHeader>
+          Room: <ChatName>{chatName}</ChatName>
+        </ChatHeader>
+      </ChatHeaderContainer>
 
-export default Chat
+      <ChatMessagesContainer>
+        {messages &&
+          messages.map(({ id, data }) => <Message key={id} contents={data} />)}
+      </ChatMessagesContainer>
+
+      <ChatInputContainer>
+        <ChatForm>
+          <ChatInput
+            value={input}
+            placeholder="Type a message"
+            type="text"
+            onChange={(e) => setInput(e.target.value)}
+          />
+          <ChatSubmitButton onClick={sendMessage}>
+            Send Message
+          </ChatSubmitButton>
+        </ChatForm>
+
+        <IconButton>
+          <MicNone />
+        </IconButton>
+      </ChatInputContainer>
+    </ChatContainer>
+  );
+};
+
+export default Chat;
 
 const ChatContainer = styled.div`
   display: flex;
@@ -99,7 +115,7 @@ const ChatContainer = styled.div`
   flex: 0.65;
   height: 100vh;
   background-color: white;
-`
+`;
 
 const ChatHeaderContainer = styled.div`
   padding: 20px;
@@ -107,21 +123,21 @@ const ChatHeaderContainer = styled.div`
   justify-content: space-between;
   border-bottom: 1px solid lightgray;
   background-color: #f5f5f5;
-`
+`;
 
 const ChatHeader = styled.div`
   font-weight: 500;
   color: gray;
-`
+`;
 
 const ChatName = styled.span`
   color: black;
-`
+`;
 
 const ChatMessagesContainer = styled.div`
   flex: 1;
   overlow: scroll;
-`
+`;
 
 const ChatInputContainer = styled.div`
   display: flex;
@@ -129,11 +145,11 @@ const ChatInputContainer = styled.div`
   padding: 10px 20px;
   border-top: 1px solid lightgray;
   background-color: #f5f5f5;
-`
+`;
 
 const ChatForm = styled.form`
   flex: 1;
-`
+`;
 
 const ChatInput = styled.input`
   width: 98%;
@@ -141,9 +157,8 @@ const ChatInput = styled.input`
   border: 1px solid lightgray;
   border-radius: 999px;
   padding: 5px;
-`
+`;
 
 const ChatSubmitButton = styled.button`
   display: none;
-`
-
+`;

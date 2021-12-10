@@ -11,13 +11,13 @@ import {
   orderBy,
 } from 'firebase/firestore'
 import { signOut } from 'firebase/auth'
-import {userSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { auth, db } from '../firebase/firebase'
 import SidebarChat from './SidebarChat'
-import {selectUser} from '../redux/features/userSlice'
+import { selectUser } from '../redux/features/userSlice'
 
-const SideBar = ({ user }) => {
+const SideBar = () => {
   const [chats, setChats] = useState([])
   const user = useSelector(selectUser)
 
@@ -110,7 +110,6 @@ const SidebarTitle = styled.div`
 const SidebarChats = styled.div`
   -ms-overflow-style: none;
   scrollbar-width: none;
-
   &::-webkits-scrollbar {
     display: none;
   }

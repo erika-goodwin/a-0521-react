@@ -42,7 +42,6 @@ const LoginButton = styled(Button)`
     color: #ddd;
     font-weight: 800;
     cursor: pointer;
-
     &:hover{
         background-color: gainsboro !important;
         color: #333;

@@ -2,23 +2,21 @@ import React from 'react'
 import styled from 'styled-components'
 import { Avatar } from '@material-ui/core'
 import * as timeago from 'timeago.js'
+import { useSelector } from 'react-redux'
 
-const Message = ({ user, content}) => {
-    // const isUser = user?.email === email
-    // console.log(content)
-    const isUser = true
+import { selectUser } from '../redux/features/userSlice'
 
-    if(!content) {
-        return <h1>Loading.....</h1>
-    }
-    
+const Message = ({ contents: { email, photo, message, timestamp }}) => {
+  
+    const user = useSelector(selectUser)
+    const isUser = user?.email === email
     return (
         <MessageContainer $sender={isUser}>
-            <AvatarContainer src={content.photo} $sender={isUser ? 1 : 0} />
+            <AvatarContainer src={photo} $sender={isUser ? 1 : 0} />
             <MessageBubble $sender={isUser}>
-                {content.message}
+                {message}
             </MessageBubble>
-            <TimeStamp>{timeago.format(new Date(content.timestamp?.toDate()))}</TimeStamp>
+            <TimeStamp>{timeago.format(new Date(timestamp?.toDate()))}</TimeStamp>
         </MessageContainer>
     )
 }
@@ -32,7 +30,6 @@ const MessageContainer = styled.div`
   width: fit-content;
   justify-content: space-between;
   margin: 15px;
-
   ${({ $sender }) =>
     $sender &&
     `
@@ -47,7 +44,6 @@ const MessageBubble = styled.p`
   border-radius: 20px;
   margin: 10px;
   margin-right: auto;
-
   ${({ $sender }) =>
     $sender &&
     `
@@ -72,4 +68,3 @@ const TimeStamp = styled.small`
   bottom: -5px;
   right: 0;
 `
-

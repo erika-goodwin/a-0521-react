@@ -14,7 +14,7 @@ function App() {
   console.log(data[0].id);
 
   return (
-    <DataContext.Provider className="App">
+    <DataContext.Provider value={data}>
       <hr />
       <p>Top Compo</p>
       <p>ID:{data[0].id}</p>
